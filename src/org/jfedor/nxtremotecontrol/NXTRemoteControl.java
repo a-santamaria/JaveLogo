@@ -627,9 +627,9 @@ public class NXTRemoteControl extends Activity implements
 								getActivityContext());
 				 
 							// set title
-						alertDialogBuilder.setTitle("Error!!");
+						alertDialogBuilder.setTitle("¡¡Error!!");
 						alertDialogBuilder
-						.setMessage("Epa chamo! Revisa todos los ciclos ;)")
+						.setMessage("¡Epa chamo! Revisa todos los ciclos ;)")
 						.setCancelable(false)
 						.setPositiveButton("Cerrar",new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,int id) {
