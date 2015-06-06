@@ -69,6 +69,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -135,8 +136,7 @@ public class NXTRemoteControl extends Activity implements
 	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
+		
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 		readPreferences(prefs, null);
@@ -171,12 +171,15 @@ public class NXTRemoteControl extends Activity implements
 				return;
 			}
 		}
-
+		mControlsMode=MODE_PROGRAM;
 		setupUI();
 
 		mNXTTalker = new NXTTalker(mHandler);
+		
 	}
-
+	public Activity getActivityContext(){
+		return this;
+	}
 	private class ClearList implements OnClickListener {
 		private List<NXTInstruction> commandList;
 
@@ -619,7 +622,28 @@ public class NXTRemoteControl extends Activity implements
 				@Override
 				public void onClick(View v) {
 					
-					if (!isSyntaxCorrect())  return;
+					if (!isSyntaxCorrect()){
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+								getActivityContext());
+				 
+							// set title
+						alertDialogBuilder.setTitle("Error!!");
+						alertDialogBuilder
+						.setMessage("Epa chamo! Revisa todos los ciclos ;)")
+						.setCancelable(false)
+						.setPositiveButton("Cerrar",new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,int id) {
+								// if this button is clicked, close
+								// current activity
+							}
+						  });
+						
+						AlertDialog alertDialog = alertDialogBuilder.create();
+						 
+						// show it
+						alertDialog.show();
+						return;
+					}
 
 					int time = 0;
 					int time1 = 1549;
@@ -1088,4 +1112,6 @@ public class NXTRemoteControl extends Activity implements
 			mSynchronizeMotors = prefs.getBoolean("PREF_REG_SYNC", false);
 		}
 	}
+	
+	
 }
